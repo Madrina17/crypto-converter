@@ -1,0 +1,31 @@
+<!-- btc-to-eth.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Convert BTC to ETH live.">
+  <title>BTC to ETH Converter</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; padding: 2rem; background: #f4f0ff; }
+    input { padding: 0.5rem; font-size: 1rem; margin: 1rem; }
+    h1 { color: #7042c8; }
+  </style>
+</head>
+<body>
+  <h1>BTC to ETH Converter</h1>
+  <input type="number" id="amount" value="1" min="0" step="any">
+  <p id="result">Loading...</p>
+  <script>
+    async function convert() {
+      const amt = document.getElementById('amount').value;
+      const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=ethereum');
+      const data = await res.json();
+      const rate = data.bitcoin.ethereum;
+      document.getElementById('result').innerText = `${amt} BTC = ${rate * amt} ETH`;
+    }
+    document.getElementById('amount').addEventListener('input', convert);
+    convert();
+  </script>
+</body>
+</html>
